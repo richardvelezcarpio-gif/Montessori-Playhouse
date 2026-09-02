@@ -1,0 +1,7 @@
+{
+  "name": "montessori-playhouse-premium",
+  "private": true,
+  "type": "module",
+  "scripts": { "build": "node scripts/validate-build.mjs" },
+  "dependencies": { "nodemailer": "^9.1.1" }
+}
