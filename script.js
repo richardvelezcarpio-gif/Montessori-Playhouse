@@ -54,6 +54,8 @@ async function submitPreRegistration(form) {
   const status = document.getElementById('formStatus');
   const successEn = 'Thank you! We received your pre-registration request. Montessori Playhouse will contact you soon.';
   const successEs = '¡Gracias! Recibimos su solicitud de pre-registro. Montessori Playhouse se comunicará con usted pronto.';
+  const whatsappEn = 'Open your organized WhatsApp message';
+  const whatsappEs = 'Abrir su mensaje organizado de WhatsApp';
   const errorEn = 'We could not send your request right now. Please try again or contact us by WhatsApp.';
   const errorEs = 'No pudimos enviar su solicitud en este momento. Inténtelo de nuevo o contáctenos por WhatsApp.';
 
@@ -70,6 +72,17 @@ async function submitPreRegistration(form) {
     if (!response.ok) throw new Error('Request failed');
     status.textContent = currentLang === 'en' ? successEn : successEs;
     status.className = 'form-status success';
+    if (contactMethod === 'WhatsApp') {
+      const whatsappText = currentLang === 'en'
+        ? `Hello Montessori Playhouse, I submitted a pre-registration request.\n\nParent / Guardian Name: ${parentName}\nChild Name: ${childName}\nChild Age: ${childAge}\nPhone: ${phone}\nEmail: ${email}\nProgram: ${program}\nPreferred Contact Method: WhatsApp\nMessage: ${message || 'None'}`
+        : `Hola Montessori Playhouse, envié una solicitud de pre-registro.\n\nNombre del Padre / Tutor: ${parentName}\nNombre del Niño/a: ${childName}\nEdad del Niño/a: ${childAge}\nTeléfono: ${phone}\nCorreo electrónico: ${email}\nPrograma: ${program}\nMétodo de contacto preferido: WhatsApp\nMensaje: ${message || 'Ninguno'}`;
+      const whatsappLink = document.createElement('a');
+      whatsappLink.href = `https://wa.me/16469537825?text=${encodeURIComponent(whatsappText)}`;
+      whatsappLink.target = '_blank';
+      whatsappLink.rel = 'noopener';
+      whatsappLink.textContent = currentLang === 'en' ? whatsappEn : whatsappEs;
+      status.append(document.createElement('br'), whatsappLink);
+    }
     form.reset();
   } catch {
     status.textContent = currentLang === 'en' ? errorEn : errorEs;
