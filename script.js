@@ -18,8 +18,14 @@ function setLanguage(lang) {
   });
 
   document.title = lang === 'en'
-    ? 'Montessori Playhouse | Group Family Daycare'
-    : 'Montessori Playhouse | Guardería Familiar Grupal';
+    ? 'Montessori Playhouse | Daycare & After School'
+    : 'Montessori Playhouse | Daycare y After School';
+
+  const descriptions = {
+    en: 'A safe, loving and educational environment where children learn, play and grow. Daycare and after-school programs for infants, toddlers and preschool-age children.',
+    es: 'Un ambiente seguro, amoroso y educativo donde los niños aprenden, juegan y crecen. Programas de daycare y after school para bebés, toddlers y niños en edad preescolar.'
+  };
+  document.querySelector('meta[name="description"]').content = descriptions[lang];
 }
 
 langButtons.forEach((button) => button.addEventListener('click', () => setLanguage(button.dataset.lang)));
@@ -93,4 +99,4 @@ async function submitPreRegistration(form) {
 }
 
 document.getElementById('year').textContent = new Date().getFullYear();
-setLanguage('en');
+setLanguage(document.documentElement.lang === 'es' ? 'es' : 'en');
